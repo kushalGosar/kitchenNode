@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 let today = new Date()
 const OrderSchema = mongoose.Schema({
-    dailyorders:[{
+    dailyorders: [{
         name: String,
         foodId: String,
         qunatity: { type: Number, default: 0 },

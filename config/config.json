@@ -1,6 +1,6 @@
 {
-    "db":{
-        "mongo":{
+    "db": {
+        "mongo": {
             "url": "mongodb://localhost:27017/kitchen-system"
         }
     }

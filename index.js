@@ -7,24 +7,13 @@ const dbConfig = require('./config/index.js');
 const mongoose = require('mongoose');
 
 const cors = require('cors');
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
-
-// io.on("connection", socket => {
-//     // console.log(socket)
-//     // socket.on("addData", data => {
-//     //     // safeJoin(docId);
-//     //     console.log('done')
-//     //     io.emit("document", data);
-//     // });
-
-//     // io.emit("documents", Object.keys(documents));
-// });
-
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -47,11 +36,8 @@ app.get('/', (req, res) => {
 });
 
 require('./routes/food.route')(app);
-require('./routes/order.route')(app,io);
+require('./routes/order.route')(app, io);
 
 
-  http.listen(3000);
+http.listen(3000);
 
-// serve.listen(3000, () => {
-//     console.log("Server is listening on port 3000");
-// });
