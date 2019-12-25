@@ -2,10 +2,7 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
-
-const dbConfig = require('./config/index.js');
-const mongoose = require('mongoose');
-
+const connection = require('./dbConnection/mongodb')
 const cors = require('cors');
 
 app.use(function (req, res, next) {
@@ -18,22 +15,9 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-console.log(dbConfig)
-mongoose.Promise = global.Promise;
-
-// Connecting to the database
-mongoose.connect(dbConfig.url, {
-    useNewUrlParser: true
-}).then(() => {
-    console.log("Successfully connected to the database");
-}).catch(err => {
-    console.log('Could not connect to the database. Exiting now...', err);
-    process.exit();
-});
-
-app.get('/', (req, res) => {
-    res.json({ "message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes." });
-});
+connection.connectToServer((err)=>{
+    if(err) process.exit();
+})
 
 require('./routes/food.route')(app);
 require('./routes/order.route')(app, io);

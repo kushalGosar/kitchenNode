@@ -8,7 +8,6 @@ module.exports = (app, io) => {
 
     io.on("connection", socket => {
         socket.on("addData", data => {
-            console.log(data)
             order.updateDone(data, io)
         });
     });

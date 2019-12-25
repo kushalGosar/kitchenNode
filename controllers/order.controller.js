@@ -6,7 +6,6 @@ exports.create = (req, res) => {
             message: "Bad Request"
         });
     }
-
     Order.find({ date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() }).then(data => {
         if (data.length === 0) {
             var arrayobj = req.body.map(element => {
@@ -16,11 +15,9 @@ exports.create = (req, res) => {
                     predicted: element.predicted,
                 })
             })
-
             var obj = new Order({
                 dailyorders: arrayobj
             })
-
             obj.save()
                 .then(data => {
                     res.send(data);
@@ -29,7 +26,6 @@ exports.create = (req, res) => {
                         message: err.message || "Some error occurred while creating the order."
                     });
                 });
-
         }
         else {
             res.status(500).send({
@@ -69,16 +65,13 @@ exports.update = (req, res) => {
             message: "order content can not be empty"
         });
     }
-
     Order.findById(req.params.orderId).then(data => {
         if (!data) {
             return res.status(404).send({
                 message: "order not found with id " + req.params.orderId
             });
         }
-
         data.dailyorders.forEach(element => {
-
             element.totalqunatity = element.totalqunatity + req.body.dailyorders.find(e => e.foodId == element.foodId).qunatity
             element.qunatity = 0
         });
@@ -103,8 +96,6 @@ exports.update = (req, res) => {
         })
     });
 
-
-
 };
 
 exports.delete = (req, res) => {
@@ -116,7 +107,6 @@ exports.updateDone = (data, io) => {
         { _id: data._id, "dailyorders._id": data.data._id },
         { $set: { "dailyorders.$.created": data.data.created + 1, "dailyorders.$.totalqunatity": data.data.totalqunatity - 1 } }
     ).then(data => {
-
         io.emit("document", true);
     })
 }

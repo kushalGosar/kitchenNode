@@ -6,13 +6,11 @@ exports.create = (req, res) => {
             message: "content can not be empty"
         });
     }
-
     const food = new Food({
         name: req.body.name || "Untitled Name",
         imgUrl: req.body.name || "Untitled Url"
     });
 
-    console.log(food)
     food.save()
         .then(data => {
             res.send(data);
@@ -33,4 +31,5 @@ exports.findAll = (req, res) => {
             });
         });
 };
+
 
