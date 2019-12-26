@@ -16,6 +16,7 @@ exports.create = (req, res) => {
                 })
             })
             var obj = new Order({
+                date:new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
                 dailyorders: arrayobj
             })
             obj.save()
@@ -43,6 +44,7 @@ exports.create = (req, res) => {
 
 
 exports.findAll = (req, res) => {
+    console.log(new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear())
     Order.find({ date: new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear() })
         .then(data => {
             res.send(data);
